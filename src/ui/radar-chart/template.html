@@ -1,0 +1,61 @@
+<figure class="w-full mx-auto">
+  <svg id="radar-chart" width="100%" height="100%" viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g id="RadarChart">
+      <!-- Hexagones de grille -->
+      <path id="hexagone" d="M300 256L341.846 286.403L325.863 335.597H274.137L258.154 286.403L300 256Z" stroke="white" stroke-opacity="0.08"/>
+      <path id="hexagone_2" d="M300 212L383.693 272.807L351.725 371.193H248.275L216.307 272.807L300 212Z" stroke="white" stroke-opacity="0.08"/>
+      <path id="hexagone_3" d="M300 168L425.539 259.21L377.588 406.79H222.412L174.461 259.21L300 168Z" stroke="white" stroke-opacity="0.08"/>
+      <path id="hexagone_4" d="M300 124L467.386 245.613L403.45 442.387H196.55L132.614 245.613L300 124Z" stroke="white" stroke-opacity="0.08"/>
+      <path id="hexagone_5" d="M300 80L509.232 232.016L429.313 477.984H170.687L90.7676 232.016L300 80Z" stroke="white" stroke-opacity="0.08"/>
+      
+      <!-- Traits depuis le centre -->
+      <path id="trait" d="M300 300V80" stroke="white" stroke-opacity="0.15" stroke-dasharray="1 1"/>
+      <path id="trait_2" d="M300 300L509.232 232.017" stroke="white" stroke-opacity="0.15" stroke-dasharray="1 1"/>
+      <path id="trait_3" d="M300 300L429.313 477.984" stroke="white" stroke-opacity="0.15" stroke-dasharray="1 1"/>
+      <path id="trait_4" d="M300 300L170.687 477.984" stroke="white" stroke-opacity="0.15" stroke-dasharray="1 1"/>
+      <path id="trait_5" d="M300 300L90.7676 232.017" stroke="white" stroke-opacity="0.15" stroke-dasharray="1 1"/>
+      
+      <!-- Polygone de données -->
+      <path id="data-polygon" d="" fill="url(#gradient-fill)" stroke="#3B82F6" stroke-width="3" opacity="0.8"/>
+      
+      <!-- Points de compétences -->
+      <g id="comprendre">
+        <circle id="point-comprendre" cx="300" cy="80" r="6" fill="#3B82F6" stroke="#fff" stroke-width="2" class="cursor-pointer transition-all"/>
+        <text id="label-comprendre" fill="white" fill-opacity="0.9" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="265.5" y="48.8636">comprendre</tspan></text>
+        <text id="percent-comprendre" fill="#3B82F6" fill-opacity="0.9" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="14" font-weight="bold" letter-spacing="0em"><tspan x="285" y="70">0%</tspan></text>
+      </g>
+      
+      <g id="exprimer">
+        <circle id="point-exprimer" cx="509.232" cy="232.017" r="6" fill="#8B5CF6" stroke="#fff" stroke-width="2" class="cursor-pointer transition-all"/>
+        <text id="label-exprimer" fill="white" fill-opacity="0.9" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="522.275" y="204.519">exprimer</tspan></text>
+        <text id="percent-exprimer" fill="#8B5CF6" fill-opacity="0.9" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="14" font-weight="bold" letter-spacing="0em"><tspan x="505" y="250">0%</tspan></text>
+      </g>
+      
+      <g id="entreprendre">
+        <circle id="point-entreprendre" cx="429.313" cy="477.984" r="6" fill="#EC4899" stroke="#fff" stroke-width="2" class="cursor-pointer transition-all"/>
+        <text id="label-entreprendre" fill="white" fill-opacity="0.9" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="415.824" y="495.208">entreprendre</tspan></text>
+        <text id="percent-entreprendre" fill="#EC4899" fill-opacity="0.9" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="14" font-weight="bold" letter-spacing="0em"><tspan x="415" y="465">0%</tspan></text>
+      </g>
+      
+      <g id="developper">
+        <circle id="point-developper" cx="170.687" cy="477.984" r="6" fill="#10B981" stroke="#fff" stroke-width="2" class="cursor-pointer transition-all"/>
+        <text id="label-developper" fill="white" fill-opacity="0.9" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="115.176" y="495.208">developper</tspan></text>
+        <text id="percent-developper" fill="#10B981" fill-opacity="0.9" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="14" font-weight="bold" letter-spacing="0em"><tspan x="155" y="465">0%</tspan></text>
+      </g>
+      
+      <g id="concevoir">
+        <circle id="point-concevoir" cx="90.7676" cy="232.017" r="6" fill="#F59E0B" stroke="#fff" stroke-width="2" class="cursor-pointer transition-all"/>
+        <text id="label-concevoir" fill="white" fill-opacity="0.9" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="24.7253" y="204.519">concevoir</tspan></text>
+        <text id="percent-concevoir" fill="#F59E0B" fill-opacity="0.9" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="14" font-weight="bold" letter-spacing="0em"><tspan x="70" y="250">0%</tspan></text>
+      </g>
+      
+      <!-- Dégradé -->
+      <defs>
+        <linearGradient id="gradient-fill" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:0.6" />
+          <stop offset="100%" style="stop-color:#C084FC;stop-opacity:0.3" />
+        </linearGradient>
+      </defs>
+    </g>
+  </svg>
+</figure>

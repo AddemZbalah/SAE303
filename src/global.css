@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Arimo:wght@400;500;600;700&display=swap');
+
+/* import des styles du ou des layouts */
+@import "./layouts/root/style.css";
+
+/* import des styles des pages */
+@import "./pages/svg-demo1/style.css";
+
+/* import des styles des composants UI */
+@import "./ui/header/style.css";
+@import "./ui/footer/style.css";
+@import "./ui/spinner/style.css";
+@import "./ui/star/style.css";
+
+@import "tailwindcss";
+
+@theme {
+  --color-st-bg-primary: #0B0F19;
+  --color-st-bg-secondary: #151b2b;
+  --color-st-bg-sidebar: #0F1420;
+  --color-st-bg-dark: #0E1320;
+}
+
+:root {
+  /* Primitives Tokens */
+  --color-neutral-100: #ffffff;
+  --color-neutral-900: #1a1a1a;
+  --color-blue-500: #3b82f6;
+  --color-green-500: #10b981;
+  --color-red-500: #ef4444;
+
+  /* Semantics Tokens*/
+  --color-bg: var(--color-neutral-100);
+  --color-fg: var(--color-neutral-900);
+  --color-primary: var(--color-blue-500);
+  --color-success: var(--color-green-500);
+  --color-danger: var(--color-red-500);
+
+  /* Skilltree Color System */
+  /* Backgrounds */
+  --st-bg-primary: 11 15 25;
+  --st-bg-secondary: 21 27 43;
+  --st-bg-sidebar: 15 20 32;
+  --st-bg-dark: 14 19 32;
+
+  /* SVG Nodes */
+  --st-node-outer: #1C2638;
+  --st-node-inner: #121927;
+  --st-node-stroke: #2D3A4D;
+
+  /* Competences Colors */
+  --st-comprendre: #3B82F6;
+  --st-concevoir: #F59E0B;
+  --st-exprimer: #F87171;
+  --st-developper: #68B750;
+  --st-entreprendre: #C084FC;
+
+  /* Competences Backgrounds */
+  --st-comprendre-bg: #1E3A52;
+  --st-concevoir-bg: #302C25;
+  --st-exprimer-bg: #3A1E1E;
+  --st-developper-bg: #1E301A;
+  --st-entreprendre-bg: #2E1E3A;
+
+  /* Line/Stroke Colors */
+  --st-line-concevoir: #A28D5B;
+
+  /* Accent Colors */
+  --st-accent-orange: #FCA311;
+
+  /* Star/Rating Colors */
+  --st-star-fill: #FFD700;
+  --st-star-stroke: #FFC107;
+
+  /* Chart Colors */
+  --st-chart-purple: #8B5CF6;
+  --st-chart-pink: #EC4899;
+  --st-chart-green: #10B981;
+
+  /* Modal & UI Colors */
+  --ui-white: #ffffff;
+  --ui-border-light: #475569;
+  --ui-border-light-faded: rgba(71, 85, 105, 0.5);
+  --ui-bg-dark: #0f172a;
+  --ui-bg-darker: #1e293b;
+  --ui-bg-darker-faded: rgba(30, 41, 59, 0.5);
+  --ui-bg-darker-lighter: rgba(30, 41, 59, 0.8);
+  --ui-bg-button: #475569;
+  --ui-bg-button-hover: #334155;
+  --ui-bg-accent: #1e293b;
+  --ui-bg-accent-light: rgba(30, 41, 59, 0.3);
+  --ui-text-primary: #ffffff;
+  --ui-text-secondary: #cbd5e1;
+  --ui-text-tertiary: #94a3b8;
+  --ui-text-muted: #64748b;
+}
+
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#app {
+  height: 100%;
+}
+
+#skill-tree-container {
+  min-height: 100vh;
+  display: block !important;
+}
+
+/* Active states for AC modal indicators */
+.indicator-active {
+  border-width: 2px;
+}
+
+.indicator-active[data-color="comprendre"] {
+  border-color: var(--st-comprendre);
+  background-color: rgba(59, 130, 246, 0.15);
+}
+
+.indicator-active[data-color="concevoir"] {
+  border-color: var(--st-concevoir);
+  background-color: rgba(245, 158, 11, 0.15);
+}
+
+.indicator-active[data-color="exprimer"] {
+  border-color: var(--st-exprimer);
+  background-color: rgba(248, 113, 113, 0.15);
+}
+
+.indicator-active[data-color="developper"] {
+  border-color: var(--st-developper);
+  background-color: rgba(104, 183, 80, 0.15);
+}
+
+.indicator-active[data-color="entreprendre"] {
+  border-color: var(--st-entreprendre);
+  background-color: rgba(192, 132, 252, 0.15);
+}
