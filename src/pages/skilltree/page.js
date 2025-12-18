@@ -47,6 +47,31 @@ C.export = function () {
   M.profile.export();
 }
 
+C.updateIndicators = function (indicators, level, color) {
+  const indicatorLevels = [0, 0, 1, 1, 2];
+  const activeIndex = level > 0 ? indicatorLevels[level - 1] : -1;
+
+  indicators.forEach((ind, index) => {
+    // Suppression de l'attribut style pour n'utiliser que les classes CSS (demande utilisateur)
+    ind.removeAttribute('style');
+
+    const strong = ind.querySelector('strong');
+    if (strong) strong.removeAttribute('style');
+
+    const span = ind.querySelector('span');
+    if (span) span.removeAttribute('style');
+
+    if (index === activeIndex) {
+      ind.classList.add('indicator-active');
+    } else {
+      ind.classList.remove('indicator-active');
+    }
+
+    // Ensure data-color is set for CSS targeting
+    ind.dataset.color = color.name;
+  });
+};
+
 C.handleLevelButtonClick = function (level, acCode, modalContainer, color, acNode) {
   M.profile.saveProgress(acCode, level);
   if (V.rootPage) {
@@ -64,17 +89,7 @@ C.handleLevelButtonClick = function (level, acCode, modalContainer, color, acNod
     b.classList.remove('level-btn-selected');
   });
 
-  indicators.forEach(ind => {
-    ind.classList.remove('indicator-active');
-  });
-
-  if (level > 0) {
-    const indicatorLevels = [0, 0, 1, 1, 2];
-    const indicatorIndex = indicatorLevels[level - 1];
-    if (indicators[indicatorIndex]) {
-      indicators[indicatorIndex].classList.add('indicator-active');
-    }
-  }
+  C.updateIndicators(indicators, level, color);
 
   // Ajouter la classe active au bouton cliqué
   if (levelButtons[level]) {
@@ -487,11 +502,7 @@ V.setupLevelButtons = function (modalContainer, color, acNode, acCode) {
       levelButtons[currentLevel].textContent = currentLevel;
     }
 
-    const indicatorLevels = [0, 0, 1, 1, 2];
-    const indicatorIndex = indicatorLevels[currentLevel - 1];
-    if (indicators[indicatorIndex]) {
-      indicators[indicatorIndex].classList.add('indicator-active');
-    }
+    C.updateIndicators(indicators, currentLevel, color);
   }
 
   levelButtons.forEach((btn, index) => {

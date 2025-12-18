@@ -1,36 +1,31 @@
 <li
-  class="ac-item overflow-hidden rounded-xl border border-slate-700/50 bg-slate-900 transition-all duration-300 hover:border-slate-600 block list-none"
-  style="border-color: var(--ui-border-light-faded); background-color: var(--ui-bg-dark);" data-code="{{code}}">
-  <header class="ac-header flex select-none items-start gap-4 p-4 bg-slate-800/80"
-    style="background-color: var(--ui-bg-darker-lighter);">
+  class="ac-item overflow-hidden rounded-xl border transition-all duration-300 block list-none border-ui-light-faded bg-ui-dark hover:border-ui-hover"
+  data-code="{{code}}" data-color="{{colorname}}">
+  <header class="ac-header flex select-none items-start gap-4 p-4 bg-ui-darker-lighter">
     <span class="flex-shrink-0 mt-1">
-      <span class="rounded border border-slate-700 bg-slate-800 px-2 py-1 text-sm font-bold"
-        style="border-color: var(--ui-border-light); background-color: var(--ui-bg-darker); color: {{hex_color}}">
+      <span class="rounded border px-2 py-1 text-sm font-bold border-ui-light bg-ui-darker text-ue-color">
         {{short_code}}
       </span>
     </span>
     <section class="flex-grow">
-      <h4 class="text-white font-medium text-sm mb-1" style="color: var(--ui-text-primary);">{{libelle}}</h4>
-      <p class="text-slate-500 text-xs" style="color: var(--ui-text-muted);">Code: {{code}}</p>
-      <p class="text-slate-400 text-xs mt-1" style="color: var(--ui-text-tertiary);">{{description}}</p>
+      <h4 class="font-medium text-sm mb-1 text-ui-primary">{{libelle}}</h4>
+      <p class="text-xs text-ui-muted">Code: {{code}}</p>
+      <p class="text-xs mt-1 text-ui-tertiary">{{description}}</p>
     </section>
   </header>
 
 
-  <section class="ac-body bg-slate-900/95" style="background-color: rgba(15, 23, 42, 0.95);">
-    <section class="p-4 border-t border-slate-700/50 space-y-4" style="border-color: var(--ui-border-light-faded);">
+  <section class="ac-body bg-ui-overlay">
+    <section class="p-4 border-t space-y-4 border-ui-light-faded">
 
 
       <section>
         <p class="flex items-center justify-between mb-2">
-          <span class="text-xs text-slate-400" style="color: var(--ui-text-tertiary);">Niveau d'acquisition</span>
-          <span class="text-xs" style="color: {{hex_color}}">Niveau actuel : <span
-              class="font-bold level-display">0/5</span></span>
+          <span class="text-xs text-ui-tertiary">Niveau d'acquisition</span>
+          <span class="text-xs text-ue-color">Niveau actuel : <span class="font-bold level-display">0/5</span></span>
         </p>
-        <figure class="h-1.5 w-full bg-slate-800 rounded-full mb-3 overflow-hidden m-0"
-          style="background-color: var(--ui-bg-darker);">
-          <span class="block h-full transition-all duration-300 ease-out progress-bar"
-            style="width: 0%; background-color: {{hex_color}}"></span>
+        <figure class="h-1.5 w-full rounded-full mb-3 overflow-hidden m-0 bg-ui-darker">
+          <span class="block h-full transition-all duration-300 ease-out progress-bar w-[0%] bg-ue-color"></span>
         </figure>
         <menu class="grid grid-cols-6 gap-2 p-0 m-0 hover:cursor-pointer">
           {{levels_html}}
@@ -38,55 +33,47 @@
       </section>
 
 
-      <section class="pt-4 border-t border-slate-700/30" style="border-color: rgba(71, 85, 105, 0.3);">
+      <section class="pt-4 border-t border-ui-faint">
         <div class="flex items-center justify-between mb-3">
-          <h5 class="text-xs uppercase tracking-wider text-slate-500 font-semibold"
-            style="color: var(--ui-text-muted);">Justificatif</h5>
+          <h5 class="text-xs uppercase tracking-wider font-semibold text-ui-muted">
+            Justificatif</h5>
           <button
-            class="import-justificatif-btn hover:cursor-pointer text-xs bg-slate-700 hover:bg-slate-600 text-white px-2 py-1 rounded"
-            style="background-color: var(--ui-bg-button); color: var(--ui-text-primary);"
-            onmouseover="this.style.backgroundColor='var(--ui-bg-button-hover)'"
-            onmouseout="this.style.backgroundColor='var(--ui-bg-button)'">
+            class="import-justificatif-btn hover:cursor-pointer text-xs px-2 py-1 rounded bg-ui-button text-ui-primary hover:bg-ui-button-hover">
             Importer un fichier
           </button>
         </div>
         <textarea
-          class="justificatif-textarea w-full h-20 bg-slate-800/50 border border-slate-700/50 rounded-lg p-3 text-xs text-slate-300 placeholder-slate-600 focus:outline-none focus:border-slate-600 resize-none"
-          style="background-color: var(--ui-bg-darker-faded); border-color: var(--ui-border-light-faded); color: var(--ui-text-secondary);"
+          class="justificatif-textarea w-full h-20 border rounded-lg p-3 text-xs focus:outline-none resize-none bg-ui-darker-faded border-ui-light-faded text-ui-secondary placeholder-ui-placeholder focus:border-ui-hover"
           placeholder="Entrez votre justificatif..."></textarea>
         <input type="file" class="justificatif-file-input hidden" accept=".txt,.pdf,.doc,.docx,.md" />
       </section>
 
-      <footer class="space-y-2 pt-4 border-t border-slate-700/30" style="border-color: rgba(71, 85, 105, 0.3);">
-        <h5 class="text-xs uppercase tracking-wider text-slate-500 font-semibold mb-3"
-          style="color: var(--ui-text-muted);">Indicateurs de
+      <footer class="space-y-2 pt-4 border-t border-ui-faint">
+        <h5 class="text-xs uppercase tracking-wider font-semibold mb-3 text-ui-muted">
+          Indicateurs de
           progression</h5>
         <ul class="grid grid-cols-3 gap-3 list-none p-0 m-0">
           <li
-            class="indicator-box rounded-lg border border-slate-700/50 bg-slate-800/30 p-3 text-center transition-all duration-300"
-            style="border-color: var(--ui-border-light-faded); background-color: var(--ui-bg-accent-light);"
+            class="indicator-box rounded-lg border p-3 text-center transition-all duration-300 border-ui-light-faded bg-ui-accent-light"
             data-status="0">
-            <strong class="block text-xs text-slate-300 font-medium mb-1" style="color: var(--ui-text-secondary);">Non
+            <strong class="block text-xs font-medium mb-1 text-ui-secondary">Non
               acquis</strong>
-            <span class="block text-[0.625rem] text-slate-500" style="color: var(--ui-text-muted);">Niv. 1</span>
+            <span class="block text-[0.625rem] text-ui-muted">Niv. 1</span>
           </li>
 
           <li
-            class="indicator-box rounded-lg border border-slate-700/50 bg-slate-800/30 p-3 text-center transition-all duration-300"
-            style="border-color: var(--ui-border-light-faded); background-color: var(--ui-bg-accent-light);"
+            class="indicator-box rounded-lg border p-3 text-center transition-all duration-300 border-ui-light-faded bg-ui-accent-light"
             data-status="1">
-            <strong class="block text-xs text-slate-300 font-medium mb-1" style="color: var(--ui-text-secondary);">En
+            <strong class="block text-xs font-medium mb-1 text-ui-secondary">En
               cours d'acquisition</strong>
-            <span class="block text-[0.625rem] text-slate-500" style="color: var(--ui-text-muted);">Niv. 3</span>
+            <span class="block text-[0.625rem] text-ui-muted">Niv. 3</span>
           </li>
 
           <li
-            class="indicator-box rounded-lg border border-slate-700/50 bg-slate-800/30 p-3 text-center transition-all duration-300"
-            style="border-color: var(--ui-border-light-faded); background-color: var(--ui-bg-accent-light);"
+            class="indicator-box rounded-lg border p-3 text-center transition-all duration-300 border-ui-light-faded bg-ui-accent-light"
             data-status="2">
-            <strong class="block text-xs text-slate-300 font-medium mb-1"
-              style="color: var(--ui-text-secondary);">Acquis</strong>
-            <span class="block text-[0.625rem] text-slate-500" style="color: var(--ui-text-muted);">Niv. 5</span>
+            <strong class="block text-xs font-medium mb-1 text-ui-secondary">Acquis</strong>
+            <span class="block text-[0.625rem] text-ui-muted">Niv. 5</span>
           </li>
         </ul>
       </footer>

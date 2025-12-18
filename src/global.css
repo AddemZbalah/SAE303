@@ -19,6 +19,29 @@
   --color-st-bg-secondary: #151b2b;
   --color-st-bg-sidebar: #0F1420;
   --color-st-bg-dark: #0E1320;
+
+  /* Semantic UI Tokens (mapped to CSS variables) */
+  --color-ui-primary: var(--ui-text-primary);
+  --color-ui-secondary: var(--ui-text-secondary);
+  --color-ui-tertiary: var(--ui-text-tertiary);
+  --color-ui-muted: var(--ui-text-muted);
+  --color-ui-placeholder: var(--ui-text-placeholder);
+
+  --color-ui-dark: var(--ui-bg-dark);
+  --color-ui-darker: var(--ui-bg-darker);
+  --color-ui-darker-faded: var(--ui-bg-darker-faded);
+  --color-ui-darker-lighter: var(--ui-bg-darker-lighter);
+  --color-ui-overlay: var(--ui-bg-overlay);
+  --color-ui-button: var(--ui-bg-button);
+  --color-ui-button-hover: var(--ui-bg-button-hover);
+  --color-ui-accent-light: var(--ui-bg-accent-light);
+
+  --color-ui-light: var(--ui-border-light);
+  --color-ui-light-faded: var(--ui-border-light-faded);
+  --color-ui-faint: var(--ui-border-faint);
+  --color-ui-hover: var(--ui-border-hover);
+
+  --color-danger: var(--color-red-500);
 }
 
 :root {
@@ -62,6 +85,13 @@
   --st-developper-bg: #1E301A;
   --st-entreprendre-bg: #2E1E3A;
 
+  /* Competences Tints (for indicators) */
+  --st-comprendre-tint: rgba(59, 130, 246, 0.2);
+  --st-concevoir-tint: rgba(245, 158, 11, 0.2);
+  --st-exprimer-tint: rgba(248, 113, 113, 0.2);
+  --st-developper-tint: rgba(104, 183, 80, 0.2);
+  --st-entreprendre-tint: rgba(192, 132, 252, 0.2);
+
   /* Line/Stroke Colors */
   --st-line-concevoir: #A28D5B;
 
@@ -93,7 +123,14 @@
   --ui-text-secondary: #cbd5e1;
   --ui-text-tertiary: #94a3b8;
   --ui-text-muted: #64748b;
+  --ui-text-placeholder: #475569;
+
+  /* Overlays & Faint Borders */
+  --ui-bg-overlay: rgba(15, 23, 42, 0.95);
+  --ui-border-faint: rgba(71, 85, 105, 0.3);
+  --ui-border-hover: #475569;
 }
+
 
 /* @tailwind base;
 @tailwind components;
@@ -120,29 +157,58 @@ body {
   border-width: 2px;
 }
 
-.indicator-active[data-color="comprendre"] {
-  border-color: var(--st-comprendre);
-  background-color: rgba(59, 130, 246, 0.15);
+
+
+
+/* Generic UE Color Utilities */
+[data-color="comprendre"] .text-ue-color,
+.text-ue-color[data-color="comprendre"] {
+  color: var(--st-comprendre);
 }
 
-.indicator-active[data-color="concevoir"] {
-  border-color: var(--st-concevoir);
-  background-color: rgba(245, 158, 11, 0.15);
+[data-color="concevoir"] .text-ue-color,
+.text-ue-color[data-color="concevoir"] {
+  color: var(--st-concevoir);
 }
 
-.indicator-active[data-color="exprimer"] {
-  border-color: var(--st-exprimer);
-  background-color: rgba(248, 113, 113, 0.15);
+[data-color="exprimer"] .text-ue-color,
+.text-ue-color[data-color="exprimer"] {
+  color: var(--st-exprimer);
 }
 
-.indicator-active[data-color="developper"] {
-  border-color: var(--st-developper);
-  background-color: rgba(104, 183, 80, 0.15);
+[data-color="developper"] .text-ue-color,
+.text-ue-color[data-color="developper"] {
+  color: var(--st-developper);
 }
 
-.indicator-active[data-color="entreprendre"] {
-  border-color: var(--st-entreprendre);
-  background-color: rgba(192, 132, 252, 0.15);
+[data-color="entreprendre"] .text-ue-color,
+.text-ue-color[data-color="entreprendre"] {
+  color: var(--st-entreprendre);
+}
+
+[data-color="comprendre"] .bg-ue-color,
+.bg-ue-color[data-color="comprendre"] {
+  background-color: var(--st-comprendre);
+}
+
+[data-color="concevoir"] .bg-ue-color,
+.bg-ue-color[data-color="concevoir"] {
+  background-color: var(--st-concevoir);
+}
+
+[data-color="exprimer"] .bg-ue-color,
+.bg-ue-color[data-color="exprimer"] {
+  background-color: var(--st-exprimer);
+}
+
+[data-color="developper"] .bg-ue-color,
+.bg-ue-color[data-color="developper"] {
+  background-color: var(--st-developper);
+}
+
+[data-color="entreprendre"] .bg-ue-color,
+.bg-ue-color[data-color="entreprendre"] {
+  background-color: var(--st-entreprendre);
 }
 
 
@@ -150,9 +216,11 @@ body {
   0% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.15);
   }
+
   100% {
     transform: scale(1);
   }
@@ -173,34 +241,83 @@ body {
 
 
 .indicator-active[data-color="comprendre"] {
-  background-color: rgba(59, 130, 246, 0.2);
+  background-color: var(--st-comprendre-tint);
   border-color: var(--st-comprendre);
 }
 
+.indicator-active[data-color="comprendre"] strong,
+.indicator-active[data-color="comprendre"] span {
+  color: var(--st-comprendre);
+}
+
 .indicator-active[data-color="concevoir"] {
-  background-color: rgba(245, 158, 11, 0.2);
+  background-color: var(--st-concevoir-tint);
   border-color: var(--st-concevoir);
 }
 
+.indicator-active[data-color="concevoir"] strong,
+.indicator-active[data-color="concevoir"] span {
+  color: var(--st-concevoir);
+}
+
 .indicator-active[data-color="exprimer"] {
-  background-color: rgba(248, 113, 113, 0.2);
+  background-color: var(--st-exprimer-tint);
   border-color: var(--st-exprimer);
+}
+
+.indicator-active[data-color="exprimer"] strong,
+.indicator-active[data-color="exprimer"] span {
+  color: var(--st-exprimer);
 }
 
 .indicator-active[data-color="developper"] {
-  background-color: rgba(104, 183, 80, 0.2);
+  background-color: var(--st-developper-tint);
   border-color: var(--st-developper);
 }
 
+.indicator-active[data-color="developper"] strong,
+.indicator-active[data-color="developper"] span {
+  color: var(--st-developper);
+}
+
 .indicator-active[data-color="entreprendre"] {
-  background-color: rgba(147, 51, 234, 0.2);
+  background-color: var(--st-entreprendre-tint);
   border-color: var(--st-entreprendre);
 }
 
+.indicator-active[data-color="entreprendre"] strong,
+.indicator-active[data-color="entreprendre"] span {
+  color: var(--st-entreprendre);
+}
 
-.level-btn-selected {
-  background-color: var(--st-exprimer);
-  border-color: var(--st-exprimer);
+
+/* Level Buttons - Dynamic Colors */
+.level-btn-active {
   color: var(--color-neutral-100);
   transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.level-btn-active[data-color="comprendre"] {
+  background-color: var(--st-comprendre);
+  border-color: var(--st-comprendre);
+}
+
+.level-btn-active[data-color="concevoir"] {
+  background-color: var(--st-concevoir);
+  border-color: var(--st-concevoir);
+}
+
+.level-btn-active[data-color="exprimer"] {
+  background-color: var(--st-exprimer);
+  border-color: var(--st-exprimer);
+}
+
+.level-btn-active[data-color="developper"] {
+  background-color: var(--st-developper);
+  border-color: var(--st-developper);
+}
+
+.level-btn-active[data-color="entreprendre"] {
+  background-color: var(--st-entreprendre);
+  border-color: var(--st-entreprendre);
 }
