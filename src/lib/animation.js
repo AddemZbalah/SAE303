@@ -168,10 +168,8 @@ Animation.animateLevelSelection = function (button, progressBar, color) {
     ease: 'power2.inOut'
   });
 
-  // Style du bouton
-  button.style.backgroundColor = color;
-  button.style.borderColor = color;
-  button.style.color = 'var(--color-neutral-100)';
+  // Appliquer la classe CSS pour le style du bouton sélectionné
+  button.classList.add('level-btn-selected');
 
   // Animation de la barre de progression
   const percentage = progressBar.dataset.percentage;
@@ -289,5 +287,83 @@ Animation.animateLaserOnLines = function (lines, duration = 4) {
   });
 };
 
+// Animation de fade out pour les nœuds AC
+Animation.fadeOutACNodes = function (nodes, duration = 0.5) {
+  if (!nodes || nodes.length === 0) return;
+
+  gsap.to(nodes, {
+    opacity: 0,
+    duration: duration,
+    ease: "power2.inOut",
+    onComplete: () => {
+      nodes.forEach(node => {
+        node.classList.add('hidden-filter');
+      });
+    }
+  });
+};
+
+// Animation de fade in pour les nœuds AC
+Animation.fadeInACNodes = function (nodes, duration = 0.3) {
+  if (!nodes || nodes.length === 0) return;
+
+  nodes.forEach(node => {
+    node.classList.remove('hidden-filter');
+  });
+
+  gsap.to(nodes, {
+    opacity: 1,
+    duration: duration,
+    ease: "power2.inOut"
+  });
+};
+
+// Animation de fade out pour les groupes de traits
+Animation.fadeOutTraits = function (groups, duration = 0.5) {
+  if (!groups || groups.length === 0) return;
+
+  gsap.to(groups, {
+    opacity: 0,
+    duration: duration,
+    ease: "power2.inOut",
+    onComplete: () => {
+      groups.forEach(group => {
+        group.classList.add('hidden-filter');
+      });
+    }
+  });
+};
+
+// Animation de fade in pour les groupes de traits
+Animation.fadeInTraits = function (groups, duration = 0.3) {
+  if (!groups || groups.length === 0) return;
+
+  groups.forEach(group => {
+    group.classList.remove('hidden-filter');
+  });
+
+  gsap.to(groups, {
+    opacity: 1,
+    duration: duration,
+    ease: "power2.inOut"
+  });
+};
+
+// Réinitialiser tous les nœuds et traits
+Animation.resetAllFilters = function (nodes, groups) {
+  gsap.killTweensOf(nodes);
+  gsap.killTweensOf(groups);
+
+  nodes.forEach(node => {
+    node.classList.remove('hidden-filter', 'pulse-effect');
+  });
+
+  groups.forEach(group => {
+    group.classList.remove('hidden-filter');
+  });
+
+  gsap.set(nodes, { opacity: 1 });
+  gsap.set(groups, { opacity: 1 });
+};
 
 export { Animation };

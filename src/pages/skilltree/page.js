@@ -61,6 +61,7 @@ C.handleLevelButtonClick = function (level, acCode, modalContainer, color, acNod
 
   levelButtons.forEach(b => {
     b.classList.remove('level-btn-active');
+    b.classList.remove('level-btn-selected');
   });
 
   indicators.forEach(ind => {
@@ -73,6 +74,11 @@ C.handleLevelButtonClick = function (level, acCode, modalContainer, color, acNod
     if (indicators[indicatorIndex]) {
       indicators[indicatorIndex].classList.add('indicator-active');
     }
+  }
+
+  // Ajouter la classe active au bouton cliqué
+  if (levelButtons[level]) {
+    levelButtons[level].classList.add('level-btn-active');
   }
 
   levelButtons[level].textContent = level;
@@ -111,9 +117,11 @@ V.createPageFragment = function () {
 
 V.attachEvents = function (pageFragment) {
   V.setupToggle();
+  V.setupMenuBurger();
   V.setupACNodesHover();
   V.setupHistoriqueModal();
   V.setupCanvasInteractions();
+  V.setupLevelFilters();
   return pageFragment;
 };
 
@@ -211,6 +219,106 @@ V.setupToggle = function () {
   if (toggleButton && sidebar && toggleIcon) {
     toggleButton.addEventListener('click', () => C.handleToggleSidebar(sidebar, toggleIcon));
   }
+};
+
+V.setupMenuBurger = function () {
+  const burgerBtn = V.rootPage.querySelector('#menu-burger-btn');
+  const burgerIcon = V.rootPage.querySelector('#menu-burger-icon');
+  const closeIcon = V.rootPage.querySelector('#menu-close-icon');
+  const dropdown = V.rootPage.querySelector('#menu-dropdown');
+
+  if (burgerBtn && dropdown && burgerIcon && closeIcon) {
+    // Toggle menu et changer l'icône
+    burgerBtn.addEventListener('click', () => {
+      dropdown.classList.toggle('hidden');
+      dropdown.classList.toggle('flex');
+      burgerIcon.classList.toggle('hidden');
+      closeIcon.classList.toggle('hidden');
+    });
+  }
+};
+
+V.setupLevelFilters = function () {
+  const filterButtons = V.rootPage.querySelectorAll('.level-filter-btn');
+  const resetButton = V.rootPage.querySelector('#level-filter-reset');
+  const allACNodes = V.rootPage.querySelectorAll('g[id^="AC "]');
+  const allTraitGroups = V.rootPage.querySelectorAll('g[id^="traits_"]');
+
+  // Bouton RESET
+  if (resetButton) {
+    resetButton.addEventListener('click', () => {
+      Animation.resetAllFilters(allACNodes, allTraitGroups);
+
+      // Ajouter l'animation bounce à tous les nœuds
+      allACNodes.forEach(node => {
+        node.classList.add('pulse-effect');
+        Animation.bounce(node, 0.8, 30);
+      });
+
+      // Fade in tous les traits
+      Animation.fadeInTraits(allTraitGroups, 0.3);
+    });
+  }
+
+  // Boutons de filtre par niveau
+  filterButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const level = parseInt(btn.dataset.level);
+
+      // Séparer les nœuds à afficher et à masquer
+      const nodesToShow = [];
+      const nodesToHide = [];
+
+      allACNodes.forEach(node => {
+        const acCode = node.getAttribute('id');
+        const levelIndex = pn.getLevelIndex(acCode) - 1;
+
+        if (levelIndex + 1 === level) {
+          nodesToShow.push(node);
+          node.classList.add('pulse-effect');
+          Animation.bounce(node, 0.8, 30);
+        } else {
+          nodesToHide.push(node);
+          node.classList.remove('pulse-effect');
+        }
+      });
+
+      // Séparer les traits à afficher et à masquer
+      const traitsToShow = [];
+      const traitsToHide = [];
+
+      allTraitGroups.forEach(traitGroup => {
+        const groupId = traitGroup.id;
+        const isLevelGroup = groupId.match(/traits_\w+_niv(\d)/);
+
+        if (isLevelGroup) {
+          const groupLevel = parseInt(isLevelGroup[1]);
+
+          if (groupLevel === level) {
+            traitsToShow.push(traitGroup);
+          } else {
+            traitsToHide.push(traitGroup);
+          }
+        }
+      });
+
+      // Animer les nœuds
+      if (nodesToShow.length > 0) {
+        Animation.fadeInACNodes(nodesToShow, 0.3);
+      }
+      if (nodesToHide.length > 0) {
+        Animation.fadeOutACNodes(nodesToHide, 0.5);
+      }
+
+      // Animer les traits
+      if (traitsToShow.length > 0) {
+        Animation.fadeInTraits(traitsToShow, 0.3);
+      }
+      if (traitsToHide.length > 0) {
+        Animation.fadeOutTraits(traitsToHide, 0.5);
+      }
+    });
+  });
 };
 
 V.setupLaserAnimations = function () {
@@ -366,6 +474,7 @@ V.setupLevelButtons = function (modalContainer, color, acNode, acCode) {
     ellipseExterne.style.strokeDashoffset = initialDashoffset;
   }
 
+  // Assigner les data-color d'abord
   levelButtons.forEach(btn => btn.dataset.color = color.name);
   indicators.forEach(ind => ind.dataset.color = color.name);
 
@@ -377,7 +486,6 @@ V.setupLevelButtons = function (modalContainer, color, acNode, acCode) {
       levelButtons[currentLevel].classList.add('level-btn-active');
       levelButtons[currentLevel].textContent = currentLevel;
     }
-
 
     const indicatorLevels = [0, 0, 1, 1, 2];
     const indicatorIndex = indicatorLevels[currentLevel - 1];

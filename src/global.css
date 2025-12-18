@@ -115,7 +115,7 @@ body {
   display: block !important;
 }
 
-/* Active states for AC modal indicators */
+
 .indicator-active {
   border-width: 2px;
 }
@@ -143,4 +143,64 @@ body {
 .indicator-active[data-color="entreprendre"] {
   border-color: var(--st-entreprendre);
   background-color: rgba(192, 132, 252, 0.15);
+}
+
+
+@keyframes pulse-effect {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.pulse-effect {
+  animation: pulse-effect 0.6s ease-in-out;
+}
+
+
+.hidden-filter {
+  pointer-events: none;
+}
+
+.visible-filter {
+  pointer-events: auto;
+}
+
+
+.indicator-active[data-color="comprendre"] {
+  background-color: rgba(59, 130, 246, 0.2);
+  border-color: var(--st-comprendre);
+}
+
+.indicator-active[data-color="concevoir"] {
+  background-color: rgba(245, 158, 11, 0.2);
+  border-color: var(--st-concevoir);
+}
+
+.indicator-active[data-color="exprimer"] {
+  background-color: rgba(248, 113, 113, 0.2);
+  border-color: var(--st-exprimer);
+}
+
+.indicator-active[data-color="developper"] {
+  background-color: rgba(104, 183, 80, 0.2);
+  border-color: var(--st-developper);
+}
+
+.indicator-active[data-color="entreprendre"] {
+  background-color: rgba(147, 51, 234, 0.2);
+  border-color: var(--st-entreprendre);
+}
+
+
+.level-btn-selected {
+  background-color: var(--st-exprimer);
+  border-color: var(--st-exprimer);
+  color: var(--color-neutral-100);
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s;
 }

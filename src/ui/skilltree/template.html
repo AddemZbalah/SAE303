@@ -1566,24 +1566,67 @@
     <section id="main-area"
       class="absolute inset-0 flex h-full w-full items-center justify-center bg-gradient-to-br from-st-bg-primary to-st-bg-secondary">
 
-      <div class="absolute right-4 top-4 z-20 flex gap-2">
-        <button id="historique-btn"
-          class="flex items-center hover:cursor-pointer gap-2 rounded-lg bg-slate-800/50 px-4 py-2 text-sm text-slate-300 transition-colors hover:bg-slate-700/50 backdrop-blur-sm border border-slate-700/50">
-          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+      <div class="absolute right-4 top-4 z-20">
+        <!-- Burger Menu Button -->
+        <button id="menu-burger-btn"
+          class="flex items-center justify-center hover:cursor-pointer rounded-lg bg-slate-800/50 p-2 text-slate-300 transition-colors hover:bg-slate-700/50 backdrop-blur-sm border border-slate-700/50">
+          <!-- Burger Icon -->
+          <svg id="menu-burger-icon" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
-          <span>Historique</span>
+          <!-- Close Icon -->
+          <svg id="menu-close-icon" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
         </button>
 
-        <button id="export-btn"
-          class="flex items-center hover:cursor-pointer gap-2 rounded-lg bg-slate-800/50 px-4 py-2 text-sm text-slate-300 transition-colors hover:bg-slate-700/50 backdrop-blur-sm border border-slate-700/50">
-          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-          </svg>
-          <span>Export</span>
-        </button>
+        <!-- Dropdown Menu -->
+        <div id="menu-dropdown"
+          class="absolute right-0 top-12 hidden flex-col gap-2 rounded-lg bg-slate-800/80 p-2 backdrop-blur-sm border border-slate-700/50 min-w-max">
+
+          <button id="level-filter-1"
+            class="level-filter-btn flex items-center hover:cursor-pointer gap-2 rounded-lg bg-slate-700/50 px-4 py-2 text-sm text-slate-300 transition-colors hover:bg-slate-600/50"
+            data-level="1">
+            BUT1
+          </button>
+
+          <button id="level-filter-2"
+            class="level-filter-btn flex items-center hover:cursor-pointer gap-2 rounded-lg bg-slate-700/50 px-4 py-2 text-sm text-slate-300 transition-colors hover:bg-slate-600/50"
+            data-level="2">
+            BUT2
+          </button>
+
+          <button id="level-filter-3"
+            class="level-filter-btn flex items-center hover:cursor-pointer gap-2 rounded-lg bg-slate-700/50 px-4 py-2 text-sm text-slate-300 transition-colors hover:bg-slate-600/50"
+            data-level="3">
+            BUT3
+          </button>
+
+          <button id="level-filter-reset"
+            class="flex items-center hover:cursor-pointer gap-2 rounded-lg bg-slate-700/50 px-4 py-2 text-sm text-slate-300 transition-colors hover:bg-slate-600/50">
+            VOIR TOUT
+          </button>
+
+          <hr class="border-slate-600/50 my-1">
+
+          <button id="historique-btn"
+            class="flex items-center hover:cursor-pointer gap-2 rounded-lg bg-slate-700/50 px-4 py-2 text-sm text-slate-300 transition-colors hover:bg-slate-600/50">
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>Historique</span>
+          </button>
+
+          <button id="export-btn"
+            class="flex items-center hover:cursor-pointer gap-2 rounded-lg bg-slate-700/50 px-4 py-2 text-sm text-slate-300 transition-colors hover:bg-slate-600/50">
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            <span>Export</span>
+          </button>
+        </div>
       </div>
 
       <header class="absolute left-1/2 top-2 z-20 -translate-x-1/2 text-center">
