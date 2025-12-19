@@ -3,6 +3,7 @@ import template from "@/ui/skilltree/template.html?raw";
 import acDetailsTemplate from "@/ui/skilltree/template_ac_details.html?raw";
 import historiqueTemplate from "@/ui/skilltree/template_historique.html?raw";
 import { Animation } from "@/lib/animation.js";
+import { RadarChartView } from "@/ui/radar-chart/index.js";
 import { pn } from "@/lib/pn.js";
 import { Profile } from "@/data/profile.js";
 
@@ -119,7 +120,10 @@ C.handleCloseModal = function (modalContainer) {
   modalContainer.classList.remove('flex');
 }
 
-let V = { rootPage: null };
+let V = {
+  rootPage: null,
+  radarChart: null
+};
 
 V.init = function () {
   let fragment = V.createPageFragment();
@@ -129,6 +133,11 @@ V.init = function () {
 
 V.createPageFragment = function () {
   V.rootPage = htmlToDOM(template);
+
+  // Initialisation du Radar Chart (Modal)
+  V.radarChart = new RadarChartView();
+  V.rootPage.appendChild(V.radarChart.dom());
+
   V.setupLaserAnimations();
   V.animateSkiltreeTraits();
   V.setupFloatingAnimation();
@@ -144,7 +153,38 @@ V.attachEvents = function (pageFragment) {
   V.setupHistoriqueModal();
   V.setupCanvasInteractions();
   V.setupLevelFilters();
+  V.setupRadarToggle();
   return pageFragment;
+};
+
+V.setupRadarToggle = function () {
+  const toggleBtn = V.rootPage.querySelector('#radar-toggle-btn');
+  const closeBtn = V.radarChart.getCloseButton();
+  const modal = V.radarChart.getContainer();
+
+  if (toggleBtn && modal) {
+    toggleBtn.addEventListener('click', () => {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    });
+  }
+
+  if (closeBtn && modal) {
+    closeBtn.addEventListener('click', () => {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    });
+  }
+
+  // Fermer au clic sur le backdrop
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    });
+  }
 };
 
 V.initializeACCircles = function (customProgress = null) {
@@ -239,6 +279,18 @@ V.updateProgressionGlobale = function (customProgress = null) {
       if (percentageText) percentageText.textContent = avg + '%';
       if (barFill) Animation.animateProgressBarre(barFill, avg);
     }
+  }
+
+  // Mettre à jour le Radar Chart
+  if (V.radarChart) {
+    const radarValues = [
+      competences.comprendre.length > 0 ? Math.round(competences.comprendre.reduce((a, b) => a + b, 0) / competences.comprendre.length) : 0,
+      competences.concevoir.length > 0 ? Math.round(competences.concevoir.reduce((a, b) => a + b, 0) / competences.concevoir.length) : 0,
+      competences.exprimer.length > 0 ? Math.round(competences.exprimer.reduce((a, b) => a + b, 0) / competences.exprimer.length) : 0,
+      competences.developper.length > 0 ? Math.round(competences.developper.reduce((a, b) => a + b, 0) / competences.developper.length) : 0,
+      competences.entreprendre.length > 0 ? Math.round(competences.entreprendre.reduce((a, b) => a + b, 0) / competences.entreprendre.length) : 0
+    ];
+    Animation.updateRadarChart(V.radarChart.getPolygon(), radarValues);
   }
 };
 

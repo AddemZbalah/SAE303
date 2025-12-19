@@ -366,4 +366,45 @@ Animation.resetAllFilters = function (nodes, groups) {
   gsap.set(groups, { opacity: 1 });
 };
 
+// Animation du radar chart
+Animation.updateRadarChart = function (polygon, values, duration = 0.8) {
+  if (!polygon || !values) return;
+
+  // Calculer les points sur un cercle de rayon 80 centré en (100, 100)
+  const angles = [
+    -Math.PI / 2,                  // Top (Comprendre)
+    -Math.PI / 2 + (2 * Math.PI) / 5, // Top-Right (Concevoir)
+    -Math.PI / 2 + (4 * Math.PI) / 5, // Bottom-Right (Exprimer)
+    -Math.PI / 2 + (6 * Math.PI) / 5, // Bottom-Left (Developper)
+    -Math.PI / 2 + (8 * Math.PI) / 5  // Top-Left (Entreprendre)
+  ];
+
+  const getPointsString = (v) => {
+    return angles.map((angle, i) => {
+      const radius = (v[i] / 100) * 80;
+      const x = 100 + radius * Math.cos(angle);
+      const y = 100 + radius * Math.sin(angle);
+      return `${x.toFixed(2)},${y.toFixed(2)}`;
+    }).join(' ');
+  };
+
+  // On anime un objet factice pour interpoler les valeurs
+  const targetValues = [...values];
+  const currentValues = polygon._gsapRadarValues || [0, 0, 0, 0, 0];
+
+  gsap.to(currentValues, {
+    0: targetValues[0],
+    1: targetValues[1],
+    2: targetValues[2],
+    3: targetValues[3],
+    4: targetValues[4],
+    duration: duration,
+    ease: "power2.out",
+    onUpdate: function () {
+      polygon.setAttribute('points', getPointsString(currentValues));
+      polygon._gsapRadarValues = currentValues;
+    }
+  });
+};
+
 export { Animation };
