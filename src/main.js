@@ -7,7 +7,7 @@ import { SkilltreePage } from "./pages/skilltree/page.js";
 
 const router = new Router("app");
 
-router.addLayout("/", RootLayout);
+// router.addLayout("/", RootLayout);
 
 router.addRoute("/", SkilltreePage);
 router.addRoute("/skilltree", SkilltreePage);
