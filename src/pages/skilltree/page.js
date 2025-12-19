@@ -9,6 +9,8 @@ import { Profile } from "@/data/profile.js";
 let M = {
   dataAC: null,
   profile: null,
+  temporalProgress: null, // État du voyage dans le temps
+  temporalStepsBack: 0,   // Nombre d'étapes de retour en arrière
 
   init: async function () {
     this.profile = new Profile();
@@ -74,6 +76,11 @@ C.updateIndicators = function (indicators, level, color) {
 
 C.handleLevelButtonClick = function (level, acCode, modalContainer, color, acNode) {
   M.profile.saveProgress(acCode, level);
+
+  // Si on modifie un niveau, on sort du mode "Voyage dans le temps" pour revenir à la réalité
+  M.temporalProgress = null;
+  M.temporalStepsBack = 0;
+
   if (V.rootPage) {
     V.updateProgressionGlobale();
   }
@@ -140,7 +147,7 @@ V.attachEvents = function (pageFragment) {
   return pageFragment;
 };
 
-V.initializeACCircles = function () {
+V.initializeACCircles = function (customProgress = null) {
   const colorMap = {
     'c1': 'var(--st-comprendre)',
     'c2': 'var(--st-concevoir)',
@@ -148,6 +155,8 @@ V.initializeACCircles = function () {
     'c4': 'var(--st-developper)',
     'c5': 'var(--st-entreprendre)'
   };
+
+  const progressSource = customProgress || M.temporalProgress || M.profile.progress;
 
   for (let i = 0; i < pn.length; i++) {
     const comp = pn[i];
@@ -162,12 +171,17 @@ V.initializeACCircles = function () {
           const ellipseExterne = acNode.querySelector('circle');
           if (!ellipseExterne) return;
 
-          const progress = M.profile.progress[ac.code] || 0;
+          const progress = progressSource[ac.code] || 0;
           const circumference = 288;
           const dashoffset = circumference - (progress / 5) * circumference;
 
-          ellipseExterne.setAttribute('stroke-dasharray', circumference);
-          ellipseExterne.setAttribute('stroke-dashoffset', dashoffset);
+          // Utilisation de GSAP pour la synchronisation fluide si c'est un changement dynamique
+          if (customProgress) {
+            Animation.animateProgressCircle(ellipseExterne, dashoffset);
+          } else {
+            ellipseExterne.setAttribute('stroke-dasharray', circumference);
+            ellipseExterne.setAttribute('stroke-dashoffset', dashoffset);
+          }
           ellipseExterne.setAttribute('stroke', colorHex);
         });
       });
@@ -175,7 +189,7 @@ V.initializeACCircles = function () {
   }
 };
 
-V.updateProgressionGlobale = function () {
+V.updateProgressionGlobale = function (customProgress = null) {
   const competenceMap = {
     'c1': 'comprendre',
     'c2': 'concevoir',
@@ -192,6 +206,8 @@ V.updateProgressionGlobale = function () {
     entreprendre: []
   };
 
+  const progressSource = customProgress || M.temporalProgress || M.profile.progress;
+
   for (let i = 0; i < pn.length; i++) {
     const comp = pn[i];
     const competenceName = competenceMap[comp.couleur];
@@ -199,7 +215,7 @@ V.updateProgressionGlobale = function () {
     if (comp.niveaux && competenceName) {
       comp.niveaux.forEach(niveau => {
         niveau.acs.forEach(ac => {
-          const progress = M.profile.progress[ac.code] || 0;
+          const progress = progressSource[ac.code] || 0;
           const percentage = (progress / 5) * 100;
           competences[competenceName].push(percentage);
         });
@@ -438,7 +454,10 @@ V.setupLevelButtons = function (modalContainer, color, acNode, acCode) {
   const importBtn = modalContainer.querySelector('.import-justificatif-btn');
   const fileInput = modalContainer.querySelector('.justificatif-file-input');
   const ellipseExterne = acNode?.querySelector('circle');
-  const currentLevel = M.profile.progress[acCode] || 0;
+
+  // Utiliser le progress temporel si on est en voyage dans le temps
+  const currentLevel = (M.temporalProgress ? M.temporalProgress[acCode] : M.profile.progress[acCode]) || 0;
+
   const circumference = 288;
 
   // Charger la justification existante
@@ -529,14 +548,31 @@ V.showHistoriqueModal = function () {
   const modalContainer = V.rootPage.querySelector('#historique-modal');
   const historiqueList = modalContainer.querySelector('#historique-list');
   const historiqueEmpty = modalContainer.querySelector('#historique-empty');
+  const sliderContainer = modalContainer.querySelector('#historique-slider-container');
+  const slider = modalContainer.querySelector('#historique-slider');
 
   const history = M.profile.history;
 
   if (history.length === 0) {
     historiqueList.innerHTML = '';
     historiqueEmpty.classList.remove('hidden');
+    sliderContainer.classList.add('hidden');
   } else {
     historiqueEmpty.classList.add('hidden');
+    sliderContainer.classList.remove('hidden');
+
+    // Configurer le slider
+    slider.max = history.length;
+    slider.value = M.temporalStepsBack || 0;
+    const sliderStatus = modalContainer.querySelector('#slider-status');
+
+    if (sliderStatus) {
+      if (M.temporalStepsBack > 0) {
+        sliderStatus.textContent = `Retour de ${M.temporalStepsBack} étape(s)`;
+      } else {
+        sliderStatus.textContent = "État actuel";
+      }
+    }
 
     const colorMap = {
       'c1': { name: 'COMPRENDRE', color: 'blue' },
@@ -549,7 +585,7 @@ V.showHistoriqueModal = function () {
     const entryTemplate = modalContainer.querySelector('#historique-entry-template');
     historiqueList.innerHTML = '';
 
-    history.forEach(entry => {
+    history.forEach((entry, index) => {
       const skillIndex = pn.getSkillIndex(entry.code) - 1;
       const competence = pn[skillIndex];
       const competenceInfo = colorMap[competence.couleur];
@@ -577,6 +613,7 @@ V.showHistoriqueModal = function () {
       const dateStr = date.toLocaleDateString('fr-FR') + ' ' + date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
 
       const clone = entryTemplate.content.cloneNode(true);
+      const article = clone.querySelector('article');
       const competenceName = clone.querySelector('.historique-competence-name');
       competenceName.textContent = competenceInfo.name;
       competenceName.className = `historique-competence-name text-lg font-bold text-${competenceInfo.color}-400`;
@@ -586,8 +623,20 @@ V.showHistoriqueModal = function () {
       clone.querySelector('.historique-time-ago').textContent = timeAgo;
       clone.querySelector('.historique-date').textContent = dateStr;
 
+      // Ajouter un ID pour le surlignage lors du trajet dans le temps
+      article.dataset.historyIndex = index + 1;
+
+      // Appliquer le style si on est déjà en mode voyage dans le temps
+      if (index + 1 <= M.temporalStepsBack) {
+        article.classList.add('opacity-40', 'grayscale-[0.5]');
+        article.classList.remove('bg-ui-darker-lighter');
+        article.classList.add('bg-ui-dark');
+      }
+
       historiqueList.appendChild(clone);
     });
+
+    V.setupHistorySlider(slider, modalContainer, history);
   }
 
   modalContainer.classList.remove('hidden');
@@ -603,6 +652,54 @@ V.showHistoriqueModal = function () {
       modalContainer.classList.add('hidden');
       modalContainer.classList.remove('flex');
     }
+  };
+};
+
+V.setupHistorySlider = function (slider, modalContainer, history) {
+  const statusLabel = modalContainer.querySelector('#slider-status');
+  const entries = modalContainer.querySelectorAll('[data-history-index]');
+
+  slider.oninput = function () {
+    const stepsBack = parseInt(this.value);
+
+    // Calculer l'état de progression temporaire
+    let tempProgress = JSON.parse(JSON.stringify(M.profile.progress));
+
+    for (let i = 0; i < stepsBack; i++) {
+      const entry = history[i];
+      if (entry) {
+        tempProgress[entry.code] = entry.oldLevel;
+      }
+    }
+
+    // Mettre à jour l'étiquette de statut
+    if (stepsBack === 0) {
+      statusLabel.textContent = "État actuel";
+      M.temporalProgress = null;
+      M.temporalStepsBack = 0;
+    } else {
+      statusLabel.textContent = `Retour de ${stepsBack} étape(s)`;
+      M.temporalProgress = tempProgress;
+      M.temporalStepsBack = stepsBack;
+    }
+
+    // Surligner les entrées dans la liste qui sont "annulées" visuellement
+    entries.forEach(entry => {
+      const idx = parseInt(entry.dataset.historyIndex);
+      if (idx <= stepsBack) {
+        entry.classList.add('opacity-40', 'grayscale-[0.5]');
+        entry.classList.remove('bg-ui-darker-lighter');
+        entry.classList.add('bg-ui-dark');
+      } else {
+        entry.classList.remove('opacity-40', 'grayscale-[0.5]');
+        entry.classList.add('bg-ui-darker-lighter');
+        entry.classList.remove('bg-ui-dark');
+      }
+    });
+
+    // Synchroniser la vue (cercles et barres) avec GSAP
+    V.initializeACCircles(tempProgress);
+    V.updateProgressionGlobale(tempProgress);
   };
 };
 

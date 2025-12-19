@@ -1,14 +1,14 @@
 <section id="historique-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 p-4">
-  <article class="relative w-full max-w-2xl rounded-2xl bg-ui-dark shadow-2xl">
+  <article class="relative w-full max-w-md rounded-2xl bg-ui-dark shadow-2xl">
 
     <header class="flex items-center justify-between border-b border-ui-light-faded p-6">
-      <div class="flex items-center gap-3">
+      <section class="flex items-center gap-3">
         <svg class="h-6 w-6 text-ui-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
             d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
         <h2 class="text-xl font-bold text-ui-primary">Historique des modifications</h2>
-      </div>
+      </section>
       <button
         class="historique-close hover:cursor-pointer rounded-lg p-2 text-ui-muted transition-colors hover:bg-ui-button-hover hover:text-ui-primary">
         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -17,8 +17,22 @@
       </button>
     </header>
 
+    <!-- Slider de voyage dans le temps -->
+    <nav id="historique-slider-container" class="border-b border-ui-light-faded p-6 hidden">
+      <header class="mb-4 flex items-center justify-between">
+        <span class="text-sm font-medium text-ui-muted">Remonter le temps</span>
+        <span id="slider-status" class="text-sm font-bold text-ui-primary">État actuel</span>
+      </header>
+      <input type="range" id="historique-slider" min="0" max="0" value="0"
+        class="h-2 w-full cursor-pointer appearance-none rounded-lg bg-ui-darker accent-ui-primary">
+      <footer class="mt-2 flex justify-between text-xs text-ui-muted">
+        <span>Maintenant</span>
+        <span>Début</span>
+      </footer>
+    </nav>
 
-    <section id="historique-content" class="max-h-[37.5rem] overflow-y-auto p-6">
+
+    <section id="historique-content" class="max-h-[18rem] overflow-y-auto p-6">
       <ul class="space-y-4" id="historique-list">
 
       </ul>
@@ -34,7 +48,7 @@
     <template id="historique-entry-template">
       <li>
         <article class="rounded-lg bg-ui-darker-lighter p-4 transition-all hover:bg-ui-darker">
-          <div class="flex items-start justify-between">
+          <section class="flex items-start justify-between">
             <section class="flex-1">
               <header class="flex items-center gap-2">
                 <span class="historique-competence-name text-lg font-bold text-ui-primary"></span>
@@ -47,7 +61,7 @@
               <p class="historique-time-ago text-sm font-medium text-ui-secondary"></p>
               <p class="historique-date mt-1 text-xs text-ui-tertiary"></p>
             </footer>
-          </div>
+          </section>
         </article>
       </li>
     </template>
