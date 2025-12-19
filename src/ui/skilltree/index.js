@@ -71,11 +71,7 @@ class SkillsTreeView {
   }
 
   getNodeById(id) {
-    return this.root.querySelector('#' + id);
-  }
-
-  getModal() {
-    return this.modal;
+    return this.root.querySelector(`[id="${id}"]`);
   }
 
   getACModal() {
@@ -84,6 +80,70 @@ class SkillsTreeView {
 
   getHistoriqueModal() {
     return this.root.querySelector('#historique-modal');
+  }
+
+  getHistoriqueButton() {
+    return this.root.querySelector('#historique-btn');
+  }
+
+  getRadarToggleButton() {
+    return this.root.querySelector('#radar-toggle-btn');
+  }
+
+  getExportButton() {
+    return this.root.querySelector('#export-btn');
+  }
+
+  getImportButton() {
+    return this.root.querySelector('#import-btn');
+  }
+
+  getImportInput() {
+    return this.root.querySelector('#import-input');
+  }
+
+  getMenuBurgerButton() {
+    return this.root.querySelector('#menu-burger-btn');
+  }
+
+  getMenuBurgerIcon() {
+    return this.root.querySelector('#menu-burger-icon');
+  }
+
+  getMenuCloseIcon() {
+    return this.root.querySelector('#menu-close-icon');
+  }
+
+  getMenuDropdown() {
+    return this.root.querySelector('#menu-dropdown');
+  }
+
+  getLevelFilterButtons() {
+    return this.root.querySelectorAll('.level-filter-btn');
+  }
+
+  getLevelFilterResetButton() {
+    return this.root.querySelector('#level-filter-reset');
+  }
+
+  getMainArea() {
+    return this.root.querySelector('#main-area');
+  }
+
+  getArbreSvg() {
+    return this.root.querySelector('#arbre_de_competences_pour_svg');
+  }
+
+  getArbreUEPrincipale() {
+    return this.root.querySelector('#ARBRE_UE_PRINCIPALE');
+  }
+
+  getTraitGroups() {
+    return this.root.querySelectorAll('g[id^="traits_"]');
+  }
+
+  getProgressionItem(competence) {
+    return this.root.querySelector(`li[data-competence="${competence}"]`);
   }
 
 }

@@ -25,6 +25,18 @@ class RadarChartView {
     getCloseButton() {
         return this.root.querySelector('#radar-close');
     }
+
+    getGrid() {
+        return this.root.querySelector('.radar-grid');
+    }
+
+    getAxes() {
+        return this.root.querySelector('.radar-axes');
+    }
+
+    getMarkers() {
+        return this.root.querySelector('.radar-markers');
+    }
 }
 
 export { RadarChartView };

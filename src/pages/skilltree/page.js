@@ -154,6 +154,7 @@ V.attachEvents = function (pageFragment) {
   V.setupCanvasInteractions();
   V.setupLevelFilters();
   V.setupRadarToggle();
+  V.setupActionButtons();
   return pageFragment;
 };
 
@@ -176,7 +177,6 @@ V.setupRadarToggle = function () {
     });
   }
 
-  // Fermer au clic sur le backdrop
   if (modal) {
     modal.addEventListener('click', (e) => {
       if (e.target === modal) {
@@ -184,6 +184,38 @@ V.setupRadarToggle = function () {
         modal.classList.remove('flex');
       }
     });
+  }
+};
+
+
+V.setupActionButtons = function () {
+  const exportBtn = V.rootPage.querySelector('#export-btn');
+  const importBtn = V.rootPage.querySelector('#import-btn');
+  const importInput = V.rootPage.querySelector('#import-input');
+  const historiqueBtn = V.rootPage.querySelector('#historique-btn');
+
+  if (exportBtn) {
+    exportBtn.addEventListener('click', () => M.profile.export());
+  }
+
+  if (importBtn && importInput) {
+    importBtn.addEventListener('click', () => importInput.click());
+
+    importInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const success = M.profile.importData(event.target.result);
+          if (success) window.location.reload();
+        };
+        reader.readAsText(file);
+      }
+    });
+  }
+
+  if (historiqueBtn) {
+    historiqueBtn.addEventListener('click', () => C.handleOpenHistorique());
   }
 };
 

@@ -210,7 +210,7 @@
     <section id="main-area"
       class="absolute inset-0 flex h-full w-full items-center justify-center bg-gradient-to-br from-st-bg-primary to-st-bg-secondary">
 
-      <div class="absolute right-4 top-4 z-20">
+      <nav class="absolute right-4 top-4 z-20">
         <!-- Burger Menu Button -->
         <button id="menu-burger-btn"
           class="flex items-center justify-center hover:cursor-pointer rounded-lg bg-ui-darker-faded p-2 text-ui-secondary transition-colors hover:bg-ui-darker-lighter backdrop-blur-sm border border-ui-light-faded">
@@ -225,7 +225,7 @@
         </button>
 
         <!-- Dropdown Menu -->
-        <div id="menu-dropdown"
+        <menu id="menu-dropdown"
           class="absolute right-0 top-12 hidden flex-col gap-2 rounded-lg bg-ui-darker-lighter p-2 backdrop-blur-sm border border-ui-light-faded min-w-max">
 
           <button id="level-filter-1"
@@ -292,16 +292,16 @@
           </button>
 
           <input type="file" id="import-input" class="hidden" accept=".json">
-        </div>
-      </div>
+        </menu>
+      </nav>
 
       <header class="absolute left-1/2 top-2 z-20 -translate-x-1/2 text-center">
         <h1 class="text-ui-tertiary text-xs tracking-[0.4em] font-light mb-1 uppercase">Arbre de</h1>
-        <div class="text-3xl font-light tracking-[0.3em] text-white mb-2">
+        <h2 class="text-3xl font-light tracking-[0.3em] text-white mb-2">
           COMPÉTENCES
-        </div>
-        <div class="text-ui-tertiary text-sm font-light">Etudiant : <span class="text-ui-secondary">Addem</span>
-        </div>
+        </h2>
+        <p class="text-ui-tertiary text-sm font-light">Etudiant : <span class="text-ui-secondary">Addem</span>
+        </p>
       </header>
 
 
