@@ -592,7 +592,36 @@ V.setupHistoriqueModal = function () {
 
   const exportButton = V.rootPage.querySelector('#export-btn');
   if (exportButton) {
-    exportButton.addEventListener('click', () => C.export());
+    exportButton.addEventListener('click', () => {
+      M.profile.export();
+    });
+  }
+
+  const importBtn = V.rootPage.querySelector('#import-btn');
+  const importInput = V.rootPage.querySelector('#import-input');
+
+  if (importBtn && importInput) {
+    importBtn.addEventListener('click', () => {
+      importInput.click();
+    });
+
+    importInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const content = event.target.result;
+        const success = M.profile.importData(content);
+        if (success) {
+          alert('Importation réussie ! La page va se recharger.');
+          window.location.reload();
+        } else {
+          alert('Erreur lors de l\'importation. Vérifiez le format du fichier.');
+        }
+      };
+      reader.readAsText(file);
+    });
   }
 };
 

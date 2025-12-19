@@ -23,6 +23,30 @@
     <section class="flex flex-col items-center justify-center p-8">
       <section class="relative h-64 w-64 md:h-80 md:w-80">
         <svg viewBox="0 0 200 200" class="h-full w-full overflow-visible">
+          <defs>
+            <!-- Gradients for axes -->
+            <linearGradient id="grad-comprendre" gradientUnits="userSpaceOnUse" x1="100" y1="100" x2="100" y2="20">
+              <stop offset="0%" stop-color="var(--ui-border-light)" stop-opacity="0.2" />
+              <stop offset="100%" stop-color="var(--st-comprendre)" stop-opacity="0.8" />
+            </linearGradient>
+            <linearGradient id="grad-concevoir" gradientUnits="userSpaceOnUse" x1="100" y1="100" x2="176" y2="75">
+              <stop offset="0%" stop-color="var(--ui-border-light)" stop-opacity="0.2" />
+              <stop offset="100%" stop-color="var(--st-concevoir)" stop-opacity="0.8" />
+            </linearGradient>
+            <linearGradient id="grad-exprimer" gradientUnits="userSpaceOnUse" x1="100" y1="100" x2="147" y2="165">
+              <stop offset="0%" stop-color="var(--ui-border-light)" stop-opacity="0.2" />
+              <stop offset="100%" stop-color="var(--st-exprimer)" stop-opacity="0.8" />
+            </linearGradient>
+            <linearGradient id="grad-developper" gradientUnits="userSpaceOnUse" x1="100" y1="100" x2="53" y2="165">
+              <stop offset="0%" stop-color="var(--ui-border-light)" stop-opacity="0.2" />
+              <stop offset="100%" stop-color="var(--st-developper)" stop-opacity="0.8" />
+            </linearGradient>
+            <linearGradient id="grad-entreprendre" gradientUnits="userSpaceOnUse" x1="100" y1="100" x2="24" y2="75">
+              <stop offset="0%" stop-color="var(--ui-border-light)" stop-opacity="0.2" />
+              <stop offset="100%" stop-color="var(--st-entreprendre)" stop-opacity="0.8" />
+            </linearGradient>
+          </defs>
+
           <!-- Background Grids -->
           <g class="radar-grid stroke-ui-light-faded fill-none">
             <polygon points="100,20 176,75 147,165 53,165 24,75" stroke-width="1" />
@@ -31,40 +55,41 @@
             <polygon points="100,80 131,102 119,127 81,127 69,102" stroke-width="1" />
           </g>
 
-          <!-- Axes -->
-          <g class="radar-axes stroke-ui-light-faded" stroke-width="1" stroke-dasharray="2,2">
-            <line x1="100" y1="100" x2="100" y2="20" />
-            <line x1="100" y1="100" x2="176" y2="75" />
-            <line x1="100" y1="100" x2="147" y2="165" />
-            <line x1="100" y1="100" x2="53" y2="165" />
-            <line x1="100" y1="100" x2="24" y2="75" />
+          <!-- Axes with Gradients -->
+          <g class="radar-axes" stroke-width="2" stroke-dasharray="4,4">
+            <line x1="100" y1="100" x2="100" y2="20" stroke="url(#grad-comprendre)" />
+            <line x1="100" y1="100" x2="176" y2="75" stroke="url(#grad-concevoir)" />
+            <line x1="100" y1="100" x2="147" y2="165" stroke="url(#grad-exprimer)" />
+            <line x1="100" y1="100" x2="53" y2="165" stroke="url(#grad-developper)" />
+            <line x1="100" y1="100" x2="24" y2="75" stroke="url(#grad-entreprendre)" />
           </g>
 
           <!-- Data Polygon -->
           <polygon id="radar-data-poly" points="100,100 100,100 100,100 100,100 100,100"
-            class="fill-ui-primary/30 stroke-ui-primary transition-all duration-300" stroke-width="2" />
+            class="fill-ui-primary/20 stroke-ui-primary shadow-glow transition-all duration-300" stroke-width="2.5"
+            stroke-linejoin="round" />
 
           <!-- Markers at 100% -->
           <g class="radar-markers">
-            <circle cx="100" cy="20" r="3" class="fill-st-comprendre" />
-            <circle cx="176" cy="75" r="3" class="fill-st-concevoir" />
-            <circle cx="147" cy="165" r="3" class="fill-st-exprimer" />
-            <circle cx="53" cy="165" r="3" class="fill-st-developper" />
-            <circle cx="24" cy="75" r="3" class="fill-st-entreprendre" />
+            <circle cx="100" cy="20" r="4" class="fill-st-comprendre animate-pulse" />
+            <circle cx="176" cy="75" r="4" class="fill-st-concevoir animate-pulse" />
+            <circle cx="147" cy="165" r="4" class="fill-st-exprimer animate-pulse" />
+            <circle cx="53" cy="165" r="4" class="fill-st-developper animate-pulse" />
+            <circle cx="24" cy="75" r="4" class="fill-st-entreprendre animate-pulse" />
           </g>
         </svg>
 
         <!-- Labels -->
         <span
-          class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] uppercase tracking-wider text-st-comprendre font-bold">Comprendre</span>
+          class="absolute -top-8 left-1/2 -translate-x-1/2 text-[11px] uppercase tracking-widest text-st-comprendre font-black drop-shadow-sm">Comprendre</span>
         <span
-          class="absolute top-[35%] -right-12 text-[10px] uppercase tracking-wider text-st-concevoir font-bold">Concevoir</span>
+          class="absolute top-[35%] -right-16 text-[11px] uppercase tracking-widest text-st-concevoir font-black drop-shadow-sm">Concevoir</span>
         <span
-          class="absolute -bottom-4 right-4 text-[10px] uppercase tracking-wider text-st-exprimer font-bold">Exprimer</span>
+          class="absolute -bottom-6 right-0 text-[11px] uppercase tracking-widest text-st-exprimer font-black drop-shadow-sm">Exprimer</span>
         <span
-          class="absolute -bottom-4 left-4 text-[10px] uppercase tracking-wider text-st-developper font-bold">Développer</span>
+          class="absolute -bottom-6 left-0 text-[11px] uppercase tracking-widest text-st-developper font-black drop-shadow-sm">Développer</span>
         <span
-          class="absolute top-[35%] -left-16 text-[10px] uppercase tracking-wider text-st-entreprendre font-bold">Entreprendre</span>
+          class="absolute top-[35%] -left-20 text-[11px] uppercase tracking-widest text-st-entreprendre font-black drop-shadow-sm">Entreprendre</span>
       </section>
     </section>
 

@@ -42,6 +42,13 @@
   --color-ui-hover: var(--ui-border-hover);
 
   --color-danger: var(--color-red-500);
+
+  /* Competency Colors for Tailwind */
+  --color-st-comprendre: var(--st-comprendre);
+  --color-st-concevoir: var(--st-concevoir);
+  --color-st-exprimer: var(--st-exprimer);
+  --color-st-developper: var(--st-developper);
+  --color-st-entreprendre: var(--st-entreprendre);
 }
 
 :root {
@@ -339,4 +346,25 @@ body {
 
 #historique-content::-webkit-scrollbar-thumb:hover {
   background: var(--ui-text-muted);
+}
+
+/* Radar Chart Specific Styles */
+.shadow-glow {
+  filter: drop-shadow(0 0 8px var(--ui-text-primary));
+}
+
+#radar-modal article {
+  animation: modalSlideUp 0.4s ease-out;
+}
+
+@keyframes modalSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
