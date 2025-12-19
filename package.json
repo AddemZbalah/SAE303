@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@tailwindcss/vite": "^4.1.18",
     "gsap": "^3.13.0",
     "prettier": "^3.6.2",
     "vite": "^7.1.7",

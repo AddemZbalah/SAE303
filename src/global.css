@@ -14,6 +14,9 @@
 
 @import "tailwindcss";
 
+@source "../index.html";
+@source "./**/*.{js,ts,jsx,tsx,html}";
+
 @theme {
   --color-st-bg-primary: #0B0F19;
   --color-st-bg-secondary: #151b2b;
@@ -49,7 +52,20 @@
   --color-st-exprimer: var(--st-exprimer);
   --color-st-developper: var(--st-developper);
   --color-st-entreprendre: var(--st-entreprendre);
+
+  /* Migrated from tailwind.config.js */
+  --color-st-node-outer: var(--st-node-outer);
+  --color-st-node-inner: var(--st-node-inner);
+  --color-st-node-stroke: var(--st-node-stroke);
+  --color-st-accent-orange: var(--st-accent-orange);
+  --color-st-star-fill: var(--st-star-fill);
+  --color-st-star-stroke: var(--st-star-stroke);
+  --color-st-chart-purple: var(--st-chart-purple);
+  --color-st-chart-pink: var(--st-chart-pink);
+  --color-st-chart-green: var(--st-chart-green);
+  --color-st-line-concevoir: var(--st-line-concevoir);
 }
+
 
 :root {
   /* Primitives Tokens */
